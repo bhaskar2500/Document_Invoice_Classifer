@@ -1,0 +1,15 @@
+<script type="text/javascript" src="{{ url_for('static', filename='fillImage.js') }}">
+</script>
+<form method=post enctype=multipart/form-data> <input type="file" name='file' onchange="readURL(this);" />
+<br />
+<br />
+
+<input type="submit" value="Check" />
+<img id="blah" src="#" alt="your image" />
+</form>
+
+
+<h2>
+    {% if image.type %}
+
+    Uploaded document is</h2> {{ image.type }}{% endif %}
