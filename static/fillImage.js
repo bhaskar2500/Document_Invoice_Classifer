@@ -8,9 +8,17 @@ function readURL(input) {
             element = document.getElementById('blah').setAttribute('src',e.target.result);
             document.getElementById('blah').setAttribute('width',224);
             document.getElementById('blah').setAttribute('height',224);
-            
+            localStorage.setItem('previousImage',e.target.result)
         };
 
         reader.readAsDataURL(input.files[0]);
+    }
+}
+window.onload=function(){
+    previousImage = localStorage.getItem("previousImage")
+    if(previousImage!=null){
+        document.getElementById('blah').setAttribute('src',previousImage)
+        document.getElementById('blah').setAttribute('width',224);
+        document.getElementById('blah').setAttribute('height',224);
     }
 }

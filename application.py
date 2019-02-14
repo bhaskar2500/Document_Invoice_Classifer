@@ -31,9 +31,11 @@ def uploaded_file():
         K.clear_session()
         image = {}
         filename = save_uploaded_file()
+
         if filename is not None : 
             image = predict_image(os.path.join(app.config['FILES_FOLDER'],filename));
         else:
+            print(filename)
             image = None
         return render_template("index.html",image=image)
 def predict_image(filename):
