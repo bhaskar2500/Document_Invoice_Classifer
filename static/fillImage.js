@@ -3,7 +3,7 @@ function readURL(input) {
     console.log(input)
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
+        $('#filenameLabel').html(input.files[0].name);
         reader.onload = function (e) {
             element = document.getElementById('blah').setAttribute('src',e.target.result);
             document.getElementById('blah').setAttribute('width',224);
@@ -22,3 +22,4 @@ window.onload=function(){
         document.getElementById('blah').setAttribute('height',224);
     }
 }
+

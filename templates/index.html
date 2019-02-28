@@ -1,15 +1,71 @@
 <script type="text/javascript" src="{{ url_for('static', filename='fillImage.js') }}">
 </script>
-<form method=post enctype=multipart/form-data> <input type="file" name='file' onchange="readURL(this);" />
-<br />
-<br />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<input type="submit" value="Check" />
-<img id="blah" src="#" alt="your image" />
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<body style="background-color: ivory">
+<form method=post enctype=multipart/form-data>
+    <!-- <label class="btn btn-success" for="my-file-selector">
+    
+    <input  id="my-file-selector" type="file" name='file' style="display:none" onchange="readURL(this);" />
+    Upload file
+    </label>
+<br />
+<br /> -->
+
+<header>
+        <section class="hero">
+            <div class="texture-overlay"></div>
+            <div class="container">
+                <div class="row nav-wrapper">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left" style="margin-top: 20px">
+                        <a href="#">
+                            <img  style="margin-top:10px;"src="/static/pwc-logo.png" alt="PWC Logo" height="70" width="80"></a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right navicon">
+                        <a id="trigger-overlay" class="nav_slide_button nav-toggle" href="#"><span></span></a>
+                    </div>
+                </div>
+                <h1 style="font-family: Poppins-Regular; text-align:center;">Document Prediction</h1>
+
+            </div>
+
+            </section>
+</header>
+
+<div class="container container-table">
+        <div class="input-group"  style="padding-top:40px;margin-left:350px;">
+            <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file" >
+            <input type="file" class="custom-file-input" id="inputGroupFile01" name='file' style="display:none" onchange="readURL(this);" >
+            <label style="width:300px;" class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+            <div style="padding:40px;" class="input-group">
+                <img id="blah" src="#" alt="your image" />
+            </div>
+                <div class="input-group">
+                    <input class="btn btn-primary" type="submit" value="Check" />
+                    <input class="btn btn-success" type="submit" value="Get Text" style="margin-left:10px;" />
+            </div>
+        </div>
+</div>
+
 </form>
+{% if image.type %}
 
+<div class="container card" style="text-align: center">
 
-<p>
-    {% if image.type %}
+    
+        <div class="card-body">
 
-    Uploaded document is <b>{{ image.type }}{% endif %}</b> </p> 
+               <h3> Uploaded document is <b>{{ image.type }}</b> </h3>         
+        </div>
+</div>
+{% endif %}
+</body>

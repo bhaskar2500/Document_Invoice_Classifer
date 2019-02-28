@@ -31,13 +31,11 @@ def uploaded_file():
         K.clear_session()
         image = {}
         filename = save_uploaded_file()
-
         if filename is not None : 
             image = predict_image(os.path.join(app.config['FILES_FOLDER'],filename));
         else:
-            print(filename)
             image = None
-        return render_template("index.html",image=image)
+        return render_template("index.html",image=image,showModal= True)
 def predict_image(filename):
     size = (224,224)
     custom_vgg_model = create_model()
@@ -48,7 +46,7 @@ def predict_image(filename):
     img_array = ki.img_to_array(img)    
     img_array = np.expand_dims(img_array,axis=0)
     prediction = custom_vgg_model.predict(img_array)
-    prediction_output= {"type":"Invoice",} if prediction.argmax() else  {"type":"Adhar Card" }
+    prediction_output= {"type":"Invoice",} if prediction.argmax() else  {"type":"Other Document" }
     return prediction_output
 
 def save_uploaded_file():
@@ -57,8 +55,10 @@ def save_uploaded_file():
         files = request.files
         if files : 
             file = files['file']
+            print(file.filename)
             filename = file.filename
             file.save(os.path.join(app.config['FILES_FOLDER'],filename))
+            print(filename,'***')
             return filename 
     return None
     #code to predict 
