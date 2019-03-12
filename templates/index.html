@@ -51,7 +51,7 @@
             </div>
                 <div class="input-group">
                     <input class="btn btn-primary" type="submit" value="Check" />
-                    <input class="btn btn-success" type="submit" value="Get Text" style="margin-left:10px;" />
+                    <input class="btn btn-success" type="button" onclick="getText()" value="Get Text" style="margin-left:10px;" />
             </div>
         </div>
 </div>
@@ -64,7 +64,7 @@
     
         <div class="card-body">
 
-               <h3> Uploaded document is <b>{{ image.type }}</b> </h3>         
+               <h3 id="invoice"> Uploaded document is <b>{{ image.type }}</b> </h3>         
         </div>
 </div>
 {% endif %}

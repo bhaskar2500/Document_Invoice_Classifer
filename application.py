@@ -1,10 +1,13 @@
 import os
-
+import pytesseract as pt
 from flask import Flask,render_template,render_template_string,request,flash,Session,Response
 from config import *
 from PIL import Image as im
+from PIL import ImageFile 
 import numpy as np
-import cv2
+import json
+import base64
+import io
 ##Keras
 from keras.models import Model,Sequential
 from keras.layers.recurrent import GRU
@@ -79,3 +82,13 @@ def create_model():
 
     custom_vgg_model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
     return custom_vgg_model
+
+@app.route('/get_text', methods=['GET', 'POST'])
+def get_text():
+    text= None
+    filename = request.form.get('filename')
+    image = im.open(os.path.join('files',filename),'r')
+    text = pt.image_to_string(image)
+    print(text)
+    return json.dumps({"text":text})
+
