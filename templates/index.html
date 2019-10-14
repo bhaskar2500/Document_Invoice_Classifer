@@ -1,13 +1,25 @@
-<script type="text/javascript" src="{{ url_for('static', filename='fillImage.js') }}">
-</script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script  type="text/javascript"  src="{{ url_for('static', filename='app.min.js') }}"></script>
+<link  rel="stylesheet"  href="static/app.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script type="text/javascript" src="{{ url_for('static', filename='fillImage.js') }}">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</script>
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+</style>
 <body style="background-color: ivory">
-<form method=post enctype=multipart/form-data>
     <!-- <label class="btn btn-success" for="my-file-selector">
     
     <input  id="my-file-selector" type="file" name='file' style="display:none" onchange="readURL(this);" />
@@ -16,12 +28,12 @@
 <br />
 <br /> -->
 
-<header>
-        <section class="hero">
+<header style="background-color: #f7f7f7 ;width:100%">
+        <section class="hero" ></section>
             <div class="texture-overlay"></div>
-            <div class="container">
+            <div class="container" >
                 <div class="row nav-wrapper">
-                    <div class="col-md-6 col-sm-6 col-xs-6 text-left" style="margin-top: 20px">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left" >
                         <a href="#">
                             <img  style="margin-top:10px;"src="/static/pwc-logo.png" alt="PWC Logo" height="70" width="80"></a>
                     </div>
@@ -30,42 +42,69 @@
                         <a id="trigger-overlay" class="nav_slide_button nav-toggle" href="#"><span></span></a>
                     </div>
                 </div>
-                <h1 style="font-family: Poppins-Regular; text-align:center;">Document Prediction</h1>
-
             </div>
 
             </section>
 </header>
 
-<div class="container container-table">
-        <div class="input-group"  style="padding-top:40px;margin-left:350px;">
-            <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file" >
-            <input type="file" class="custom-file-input" id="inputGroupFile01" name='file' style="display:none" onchange="readURL(this);" >
-            <label style="width:300px;" class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-            <div style="padding:40px;" class="input-group">
-                <img id="blah" src="#" alt="your image" />
-            </div>
+
+    <div class="container container-table">
+            <div class="input-group center"  >
+            <form method="post" action="" enctype="multipart/form-data" id="documentForm">
+                <h1 style="font-family: Georgia, 'Times New Roman', Times, serif; text-align:center;margin-right:15px;margin-top:25px;margin-bottom:25px;">Document Prediction</h1>
+
+                <div class="input-group-prepend">
+                <!-- <span class="input-group-text" id="inputGroupFileAddon01">Upload</span> -->
+                </div>
+                <div class="custom-file" >
+                <input type="file" class="custom-file-input" id="upload_file"  multiple=""
+                name="uploadedFile[]" style="display:none" onchange="readURL(this);" />
+                <label style="width:300px; cursor: pointer;" class="custom-file-label" for="upload_file">Choose file</label>
+                </div>
+                <div style="padding:40px;" class="input-group">
+                    <img id="blah" src="#" alt="Upload the image" />
+                </div>
+                    <div class="input-group">
+                        <input style="display:block;margin-bottom:10px;" class="btn btn-primary" type="button" id="predictImage"  style="display: none" value="Predict Image" />
+                        <input class="btn btn-success" value="Get Text" id="getText" type="button" value="Get Text" style="margin-left:10px;display:block;width: 120px;height: 37px;" />
+                </div>
                 <div class="input-group">
-                    <input class="btn btn-primary" type="submit" value="Check" />
-                    <input class="btn btn-success" type="button" onclick="getText()" value="Get Text" style="margin-left:10px;" />
+                  <textarea name="sentimentText" id="sentimentText" ></textarea> 
+                 
+                </div>
+                <br/>
+                 <input class="btn btn-primary" type="button" id="predictSentimentBtn" value="Predict Sentiments" />
+            </form>
+
             </div>
-        </div>
-</div>
+    </div>
 
-</form>
-{% if image.type %}
 
-<div class="container card" style="text-align: center">
 
+    <!-- Modal -->
+    <div id="myModal" class="modal fade " role="dialog">
+      <div class="modal-dialog">
     
-        <div class="card-body">
-
-               <h3 id="invoice"> Uploaded document is <b>{{ image.type }}</b> </h3>         
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" >
+            <b><h4 id="heading"> Results </h4> </b>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+                Predicted <span id="type"></span> is <b id="imageType"></b>.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
-</div>
-{% endif %}
-</body>
+    
+      </div>
+    </div>
+<footer id="login" style="overflow:hidden; text-align: center; background-color: #181818; position: fixed; bottom: 0; width: 99%; height: 21px; font-size: small; left: 0px; margin: 0px;">
+
+    <br />
+    <h4 style="top: -20px; font-size: 11px; position: relative; color: whitesmoke">&copy; 2019 PricewaterhouseCoopers Private Limited&nbsp;
+    </h4>
+    <br />
+</footer>
